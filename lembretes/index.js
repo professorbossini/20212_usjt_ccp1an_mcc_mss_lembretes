@@ -1,5 +1,6 @@
 const express = require ('express')
 const bodyParser = require ('body-parser')
+const axios = require('axios')
 const app = express()
 //middleware, permite acessar o corpo (req.body) e tratá-lo como um objeto JSON
 app.use(bodyParser.json())
@@ -11,10 +12,22 @@ app.get('/lembretes', (req, res) => {
     res.status(200).send(lembretes)
 })
 
-app.post ('/lembretes', (req, res) => {
+app.post ('/lembretes', async (req, res) => {
     contador++
     const {texto} = req.body
     lembretes[contador] = {contador: contador, texto: texto}
+    await axios.post('http://localhost:10000/eventos', {
+        tipo: "LembreteCriado",
+        dados: {
+            contador, texto
+        }
+    })
     res.status(201).send(lembretes[contador])
 })
+
+app.post('/eventos', (req, res) => {
+    console.log(req.body)
+    res.status(204).end()
+})
+
 app.listen (4000, () => console.log ("Lembretes. Porta 4000"))

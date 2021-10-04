@@ -16,12 +16,12 @@ app.post ('/lembretes/:id/observacoes', async (req, res) => {
     const { texto } = req.body
     const idLembrete = req.params.id
     const observacoesDoLembrete = observacoesPorLembreteId[idLembrete] || []
-    observacoesDoLembrete.push({id: idObs, texto})
+    observacoesDoLembrete.push({id: idObs, texto, status: "Aguardando"})
     observacoesPorLembreteId[idLembrete] = observacoesDoLembrete
     await axios.post ('http://localhost:10000/eventos', {
         tipo: "ObservacaoCriada",
         dados: {
-            id: idObs, texto, lembreteId: req.params.id
+            id: idObs, texto, lembreteId: req.params.id, status: "Aguardando"
         }
     })
     res.status(201).send(observacoesDoLembrete)

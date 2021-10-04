@@ -1,10 +1,11 @@
 const express = require ('express')
-const bodyParser = require ('body-parser')
-const axios = require('axios')
+// const bodyParser = require ('body-parser')
 const app = express()
-//middleware, permite acessar o corpo (req.body) e tratá-lo como um objeto JSON
-app.use(bodyParser.json())
+app.use(express.json())
 
+//middleware, permite acessar o corpo (req.body) e tratá-lo como um objeto JSON
+
+const axios = require('axios')
 const lembretes = {}
 contador = 0
 

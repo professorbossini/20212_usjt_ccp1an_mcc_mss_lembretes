@@ -1,3 +1,4 @@
+const axios = require ('axios')
 const express = require ('express')
 const app = express()
 app.use(express.json())
@@ -15,8 +16,13 @@ const funcoes = {
     }
 }
 app.post('/eventos', (req, res) => {
-    // req.body: {tipo: ObservacaoCriada, dados: {id: 1, texto: 'abc'}}
-    funcoes[req.body.tipo](req.body.dados)
+    try{
+        console.log(req.body)
+        // req.body: {tipo: ObservacaoCriada, dados: {id: 1, texto: 'abc'}}
+        funcoes[req.body.tipo](req.body.dados)
+    }
+    catch (e){ console.log ("e: " + e) }
+    res.status(200).send({msg: 'ok'})
 })
 
 app.listen(7000, () => console.log ("Classificação. Porta 7000."))

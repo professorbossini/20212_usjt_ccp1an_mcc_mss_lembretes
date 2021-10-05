@@ -27,7 +27,10 @@ app.post ('/lembretes', async (req, res) => {
 })
 
 app.post('/eventos', (req, res) => {
-    console.log(req.body)
+    try{
+        console.log(req.body)
+    }
+    catch (e){}
     res.status(204).end()
 })
 
